@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How It Works — Between</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f5f3ee;
+      color: #111;
+      -webkit-font-smoothing: antialiased;
+    }
+    .page {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 32px 24px 80px;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+    .brand {
+      font-size: 14px;
+      color: #6f6a63;
+    }
+    .back {
+      text-decoration: none;
+      color: #111;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .hero {
+      background: #fff;
+      border: 1px solid #e7e0d6;
+      border-radius: 30px;
+      padding: 34px;
+      margin-bottom: 24px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.04);
+    }
+    .eyebrow {
+      font-size: 13px;
+      color: #7b756e;
+      margin-bottom: 14px;
+    }
+    h1 {
+      margin: 0 0 16px;
+      font-size: 58px;
+      line-height: .98;
+      letter-spacing: -0.05em;
+    }
+    .hero p {
+      margin: 0;
+      max-width: 860px;
+      font-size: 20px;
+      line-height: 1.65;
+      color: #5d5953;
+    }
+    .steps {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+    .step {
+      display: grid;
+      grid-template-columns: 90px 1fr;
+      gap: 20px;
+      align-items: start;
+      background: #fff;
+      border: 1px solid #e7e0d6;
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.04);
+    }
+    .step-number {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: #111;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 800;
+    }
+    .step h2 {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+    .step p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.65;
+      color: #5d5953;
+      max-width: 780px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 24px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid #e7e0d6;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.04);
+    }
+    .card h3 {
+      margin: 0 0 12px;
+      font-size: 28px;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+    }
+    .card p {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.65;
+      color: #5d5953;
+    }
+    .list {
+      margin: 16px 0 0;
+      padding-left: 18px;
+      color: #4f4a44;
+    }
+    .list li {
+      margin-bottom: 10px;
+      line-height: 1.6;
+      font-size: 16px;
+    }
+    .final {
+      background: #111;
+      color: #fff;
+      border-radius: 30px;
+      padding: 30px;
+      margin-top: 10px;
+    }
+    .final .eyebrow {
+      color: rgba(255,255,255,.65);
+    }
+    .final h2 {
+      margin: 0 0 14px;
+      font-size: 38px;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+    }
+    .final p {
+      margin: 0 0 24px;
+      max-width: 760px;
+      color: rgba(255,255,255,.82);
+      font-size: 18px;
+      line-height: 1.7;
+    }
+    .btn {
+      display: inline-block;
+      padding: 16px 24px;
+      border-radius: 999px;
+      background: #fff;
+      color: #111;
+      font-weight: 700;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .step {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      h1 {
+        font-size: 42px;
+      }
+      .hero p,
+      .step p,
+      .card p {
+        font-size: 17px;
+      }
+      .step h2,
+      .card h3 {
+        font-size: 24px;
+      }
+      .final h2 {
+        font-size: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">Between · How it works</div>
+      <a class="back" href="/">Back to homepage</a>
+    </div>
+
+    <section class="hero">
+      <div class="eyebrow">How it works</div>
+      <h1>Not fake compatibility. Real patterns.</h1>
+      <p>
+        Between does not invent synthetic chemistry or give you a random flattering score.
+        It looks for real overlap, recurring signals, and behavioral patterns that suggest
+        what could genuinely improve a connection or a person’s week.
+      </p>
+    </section>
+
+    <section class="steps">
+      <div class="step">
+        <div class="step-number">1</div>
+        <div>
+          <h2>You start with the gift or the dashboard</h2>
+          <p>
+            Some people arrive through the connection gift. Others come to understand themselves first.
+            Either way, the system begins with inputs: preferences, patterns, histories, signals, and context.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">2</div>
+        <div>
+          <h2>We look for recurring signals</h2>
+          <p>
+            The system compares what keeps showing up: shared interests, timing, moods, repeated themes,
+            comfort zones, novelty patterns, social energy, and the types of plans that tend to create momentum.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">3</div>
+        <div>
+          <h2>We turn that into useful output</h2>
+          <p>
+            Instead of giving vague lifestyle advice, Between turns the data into things you can actually use:
+            events, movies, plans, rituals, next moves, and projected lifts across mood, confidence, connection, or energy.
+          </p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-number">4</div>
+        <div>
+          <h2>You get a result that feels real</h2>
+          <p>
+            The goal is not to impress you with artificial intelligence language. The goal is to give you
+            something specific enough to act on — and good enough to actually make a difference.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="card">
+        <h3>What we use</h3>
+        <p>
+          Depending on the flow, the system can work from structured questions, uploaded history, shared context,
+          preferences, and behavioral patterns.
+        </p>
+        <ul class="list">
+          <li>Interests and recurring habits</li>
+          <li>Shared preferences and overlap</li>
+          <li>Patterns in timing, rhythm, and mood</li>
+          <li>Signals that suggest what tends to work</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>What we do not do</h3>
+        <p>
+          We do not pretend human relationships can be solved by one dramatic score, and we do not turn your life
+          into an ad engine.
+        </p>
+        <ul class="list">
+          <li>No fake love science</li>
+          <li>No random recommendations for the sake of volume</li>
+          <li>No generic “communicate better” nonsense</li>
+          <li>No forced products pretending to be insight</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="final">
+      <div class="eyebrow">The point</div>
+      <h2>Better data. Better timing. Better moves.</h2>
+      <p>
+        Between is built for people who want something more useful than flowers, more personal than a recommendation app,
+        and more real than fake compatibility theater.
+      </p>
+      <a class="btn" href="https://form.typeform.com/to/gTTZC8Mr" target="_blank" rel="noopener noreferrer">
+        Create a connection gift
+      </a>
+    </section>
+  </div>
+</body>
+</html>
