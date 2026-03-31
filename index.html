@@ -21,7 +21,42 @@
     .page {
       max-width: 1320px;
       margin: 0 auto;
-      padding: 32px 28px 80px;
+      padding: 24px 28px 80px;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 36px;
+      padding: 14px 0;
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #5d5953;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .nav-links a.nav-cta {
+      background: #111;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
     }
 
     .eyebrow {
@@ -35,7 +70,7 @@
       grid-template-columns: 1.02fr 0.98fr;
       gap: 28px;
       align-items: start;
-      margin-bottom: 42px;
+      margin-bottom: 54px;
     }
 
     .hero-copy {
@@ -136,7 +171,6 @@
     }
 
     .avatar:first-child { margin-left: 0; }
-
     .avatar.a { background: linear-gradient(135deg, #7c6cff, #a79cff); }
     .avatar.b { background: linear-gradient(135deg, #2e86de, #72b4ff); }
 
@@ -198,7 +232,6 @@
       border-radius: 50%;
       background: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
       box-shadow: inset 0 0 0 1px #eee6db;
@@ -291,6 +324,7 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 22px;
+      margin-bottom: 28px;
     }
 
     .card {
@@ -477,39 +511,45 @@
       white-space: nowrap;
     }
 
-    @media (max-width: 1100px) {
-      .hero {
-        grid-template-columns: 1fr;
-      }
+    .site-links {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 18px;
+    }
 
-      .cards {
+    .site-link-card {
+      background: #fff;
+      border: 1px solid #e7e0d6;
+      border-radius: 24px;
+      padding: 22px;
+      text-decoration: none;
+      color: #111;
+      box-shadow: 0 14px 40px rgba(0,0,0,0.04);
+    }
+
+    .site-link-card .mini-tag {
+      margin-bottom: 8px;
+    }
+
+    @media (max-width: 1100px) {
+      .hero,
+      .cards,
+      .site-links {
         grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 720px) {
-      .page {
-        padding: 24px 18px 50px;
-      }
-
-      .hero h1 {
-        font-size: 48px;
-      }
-
-      .hero p {
-        font-size: 18px;
-      }
-
+      .page { padding: 20px 18px 50px; }
+      .nav { flex-direction: column; align-items: flex-start; gap: 14px; }
+      .hero h1 { font-size: 48px; }
+      .hero p { font-size: 18px; }
       .score-grid,
-      .card-body {
-        grid-template-columns: 1fr;
-      }
-
+      .card-body,
       .recommend-grid,
       .details {
         grid-template-columns: 1fr;
       }
-
       .section-head {
         flex-direction: column;
         align-items: start;
@@ -519,6 +559,17 @@
 </head>
 <body>
   <div class="page">
+
+    <div class="nav">
+      <div class="brand">Between</div>
+      <div class="nav-links">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/dashboard.html">Personal dashboard</a>
+        <a href="/connection-result.html">Connection result</a>
+        <a class="nav-cta" href="https://form.typeform.com/to/gTTZC8Mr" target="_blank" rel="noopener noreferrer">Create a connection gift</a>
+      </div>
+    </div>
+
     <div class="eyebrow">The modern-day version of sending flowers</div>
 
     <section class="hero">
@@ -530,7 +581,7 @@
         </p>
         <div class="cta-row">
           <a href="https://form.typeform.com/to/gTTZC8Mr" class="btn-primary" target="_blank" rel="noopener noreferrer">Create a connection gift</a>
-          <a href="#examples" class="btn-secondary">See example reveals</a>
+          <a href="/how-it-works.html" class="btn-secondary">How it works</a>
         </div>
       </div>
 
@@ -650,7 +701,7 @@
 
         <div class="card-footer">
           <div class="card-footer-text">Sent because <strong>flowers disappear by Tuesday</strong></div>
-          <a href="https://form.typeform.com/to/gTTZC8Mr" class="card-btn" target="_blank" rel="noopener noreferrer">Create this kind of gift</a>
+          <a href="/connection-result.html" class="card-btn">View reveal page</a>
         </div>
       </div>
 
@@ -706,10 +757,39 @@
 
         <div class="card-footer">
           <div class="card-footer-text">Sent for Father’s Day — <strong>better than pretending he wanted another wallet</strong></div>
-          <a href="https://form.typeform.com/to/gTTZC8Mr" class="card-btn" target="_blank" rel="noopener noreferrer">Create this kind of gift</a>
+          <a href="/connection-result.html" class="card-btn">View reveal page</a>
         </div>
       </div>
     </section>
+
+    <div class="section-head">
+      <h2>Explore the product</h2>
+      <p>
+        These pages are still early, but together they already show the product logic:
+        the gift, the shared reveal, the personal dashboard, and the explanation layer.
+      </p>
+    </div>
+
+    <section class="site-links">
+      <a class="site-link-card" href="/how-it-works.html">
+        <div class="mini-tag">Page 1</div>
+        <div class="mini-title">How it works</div>
+        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The clean explanation page for the product logic.</div>
+      </a>
+
+      <a class="site-link-card" href="/dashboard.html">
+        <div class="mini-tag">Page 2</div>
+        <div class="mini-title">Personal dashboard</div>
+        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The solo page that helps a person understand themselves.</div>
+      </a>
+
+      <a class="site-link-card" href="/connection-result.html">
+        <div class="mini-tag">Page 3</div>
+        <div class="mini-title">Connection result</div>
+        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The shared reveal page two people can open together.</div>
+      </a>
+    </section>
+
   </div>
 </body>
 </html>
