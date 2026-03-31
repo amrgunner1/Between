@@ -19,23 +19,39 @@
     .page {
       max-width: 1200px;
       margin: 0 auto;
-      padding: 32px 24px 80px;
+      padding: 24px 24px 80px;
     }
-    .topbar {
+    .nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 24px;
+      margin-bottom: 36px;
+      padding: 14px 0;
     }
     .brand {
-      font-size: 14px;
-      color: #6f6a63;
-    }
-    .back {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
       text-decoration: none;
       color: #111;
+    }
+    .nav-links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .nav-links a {
+      text-decoration: none;
+      color: #5d5953;
       font-size: 14px;
       font-weight: 600;
+    }
+    .nav-links a.nav-cta {
+      background: #111;
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: 999px;
     }
     .hero {
       background: #fff;
@@ -183,6 +199,14 @@
     }
 
     @media (max-width: 640px) {
+      .page {
+        padding: 20px 18px 50px;
+      }
+      .nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
       h1 {
         font-size: 42px;
       }
@@ -203,9 +227,15 @@
 </head>
 <body>
   <div class="page">
-    <div class="topbar">
-      <div class="brand">Between · How it works</div>
-      <a class="back" href="/">Back to homepage</a>
+
+    <div class="nav">
+      <a href="/" class="brand">Between</a>
+      <div class="nav-links">
+        <a href="/how-it-works.html">How it works</a>
+        <a href="/dashboard.html">Personal dashboard</a>
+        <a href="/connection-result.html">Connection result</a>
+        <a class="nav-cta" href="https://form.typeform.com/to/gTTZC8Mr" target="_blank" rel="noopener noreferrer">Create a connection gift</a>
+      </div>
     </div>
 
     <section class="hero">
@@ -305,6 +335,7 @@
         Create a connection gift
       </a>
     </section>
+
   </div>
 </body>
 </html>
