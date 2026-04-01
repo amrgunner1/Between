@@ -3,793 +3,1055 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Between</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Between — Personal Dashboard</title>
   <style>
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #f5f3ee;
-      color: #111;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+    :root{
+      --bg:#f4f3f6;
+      --card:#ffffff;
+      --ink:#111111;
+      --muted:rgba(17,17,17,.55);
+      --muted-2:rgba(17,17,17,.42);
+      --border:rgba(0,0,0,.08);
+      --yellow:#f2d302;
+      --purple:#a86ad5;
+      --blue:#eef5ff;
+      --blue-ink:#304c7a;
+      --green:#2e8c53;
+      --soft:#faf9f7;
+      --soft-2:#efeff1;
+      --shadow:0 8px 24px rgba(0,0,0,.03);
+      --radius-xl:32px;
+      --radius-lg:28px;
+      --radius-md:22px;
+      --radius-sm:16px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif}
+    a{text-decoration:none;color:inherit}
+    button{font:inherit}
+
+    .app{
+      min-height:100vh;
+      background:var(--bg);
+    }
+
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:20;
+      background:#000;
+      color:#fff;
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+
+    .topbar-inner{
+      max-width:1600px;
+      margin:0 auto;
+      padding:16px 32px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:24px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      min-width:0;
+    }
+
+    .brand-title{
+      font-size:18px;
+      font-weight:600;
+      letter-spacing:-.02em;
+    }
+
+    .brand-sub{
+      font-size:14px;
+      color:rgba(255,255,255,.6);
     }
 
-    .page {
-      max-width: 1320px;
-      margin: 0 auto;
-      padding: 24px 28px 80px;
-    }
-
-    .nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 36px;
-      padding: 14px 0;
-    }
-
-    .brand {
-      font-size: 22px;
-      font-weight: 800;
-      letter-spacing: -0.04em;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: #5d5953;
-      font-size: 14px;
-      font-weight: 600;
-    }
+    .topbar-actions{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      border:none;
+      border-radius:16px;
+      padding:10px 16px;
+      cursor:pointer;
+      transition:.2s ease;
+    }
 
-    .nav-links a.nav-cta {
-      background: #111;
-      color: #fff;
-      padding: 12px 18px;
-      border-radius: 999px;
+    .btn:hover{transform:translateY(-1px)}
+    .btn-outline-dark{
+      background:transparent;
+      color:rgba(255,255,255,.82);
+      border:1px solid rgba(255,255,255,.15);
     }
+    .btn-primary{
+      background:#fff;
+      color:#000;
+      font-weight:600;
+      padding:10px 18px;
+    }
+    .btn-soft{
+      background:var(--soft-2);
+      color:rgba(17,17,17,.8);
+      font-weight:600;
+      border:1px solid var(--border);
+    }
+    .btn-black{
+      background:#111;
+      color:#fff;
+      font-weight:600;
+    }
+
+    .layout{
+      max-width:1600px;
+      margin:0 auto;
+      padding:24px 32px 40px;
+      display:grid;
+      grid-template-columns:340px 1fr;
+      gap:24px;
+    }
+
+    .panel{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .side-panel .head-accent{
+      border-top:5px solid var(--yellow);
+      padding:24px;
+    }
+
+    .side-panel .head-accent.purple{
+      border-top-color:var(--purple);
+    }
+
+    .panel-title{
+      font-size:32px;
+      font-weight:600;
+      letter-spacing:-.03em;
+      line-height:1;
+    }
+
+    .panel-kicker{
+      font-size:16px;
+      color:var(--muted);
+      margin-top:10px;
+    }
+
+    .side-score{
+      font-size:42px;
+      font-weight:600;
+      letter-spacing:-.04em;
+      line-height:1;
+    }
+
+    .side-list{
+      padding:8px 20px 8px;
+      border-top:1px solid var(--border);
+    }
+
+    .side-item{
+      display:flex;
+      gap:16px;
+      padding:18px 4px;
+      border-bottom:1px solid var(--border);
+    }
+    .side-item:last-child{border-bottom:none}
+
+    .side-icon{
+      width:40px;height:40px;
+      border-radius:14px;
+      border:2px solid #111;
+      background:#fff;
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;font-weight:700;
+      flex:0 0 auto;
+    }
+
+    .side-item-title{
+      font-size:18px;
+      font-weight:600;
+      letter-spacing:-.02em;
+    }
+
+    .side-item-sub{
+      font-size:14px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .side-item-value{
+      margin-top:8px;
+      font-size:16px;
+      color:rgba(17,17,17,.8);
+      font-weight:500;
+      line-height:1.5;
+    }
+
+    .trust-copy{
+      font-size:14px;
+      line-height:1.85;
+      color:var(--muted);
+      margin-top:12px;
+    }
+
+    .main{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .page-title{
+      font-size:52px;
+      font-weight:600;
+      letter-spacing:-.05em;
+      line-height:.98;
+    }
+
+    .page-sub{
+      margin-top:8px;
+      font-size:18px;
+      color:var(--muted);
+    }
+
+    .tabs{
+      display:flex;
+      gap:28px;
+      border-bottom:1px solid rgba(0,0,0,.1);
+      padding:0 8px;
+      flex-wrap:wrap;
+    }
+
+    .tab{
+      padding:16px 8px 14px;
+      font-size:17px;
+      font-weight:500;
+      color:rgba(17,17,17,.4);
+      border-bottom:3px solid transparent;
+    }
+
+    .tab.active{
+      color:#111;
+      border-bottom-color:var(--yellow);
+    }
+
+    .metrics{
+      display:grid;
+      grid-template-columns:repeat(4,1fr);
+      gap:20px;
+    }
+
+    .metric-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .metric-label{
+      font-size:14px;
+      color:var(--muted);
+      margin-bottom:14px;
+    }
+
+    .gauge{
+      width:180px;
+      height:180px;
+      margin:0 auto;
+      position:relative;
+      border-radius:50%;
+    }
+
+    .gauge::before{
+      content:"";
+      position:absolute;
+      inset:12px;
+      background:var(--bg);
+      border-radius:50%;
+    }
+
+    .gauge::after{
+      content:"";
+      position:absolute;
+      inset:28px;
+      background:#fff;
+      border-radius:50%;
+      z-index:1;
+    }
+
+    .gauge-center{
+      position:absolute;
+      inset:0;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      z-index:2;
+      text-align:center;
+    }
+
+    .gauge-value{
+      font-size:52px;
+      font-weight:600;
+      letter-spacing:-.05em;
+      line-height:1;
+    }
+
+    .gauge-value small{
+      font-size:24px;
+    }
+
+    .spark{
+      margin-top:16px;
+      height:110px;
+      border-radius:20px;
+      background:var(--soft);
+      padding:12px;
+      overflow:hidden;
+      position:relative;
+    }
+
+    .spark-base{
+      position:absolute;
+      left:12px; right:12px; bottom:18px;
+      height:2px;
+      background:rgba(0,0,0,.08);
+    }
+
+    .spark-fill{
+      position:absolute;
+      left:16px; bottom:18px;
+      height:40px;
+      width:72%;
+      opacity:.6;
+      border-top-left-radius:999px;
+      border-top-right-radius:999px;
+      clip-path:polygon(0 100%, 0 55%, 12% 50%, 25% 65%, 40% 58%, 55% 38%, 70% 42%, 84% 20%, 100% 10%, 100% 100%);
+    }
+
+    .two-col{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:24px;
+    }
+
+    .panel-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:20px 24px;
+      border-bottom:1px solid var(--border);
+    }
+
+    .panel-head-title{
+      font-size:18px;
+      font-weight:600;
+    }
+
+    .panel-head-sub{
+      font-size:14px;
+      color:var(--muted);
+      margin-top:4px;
+    }
+
+    .impact-wrap{
+      padding:24px;
+      display:flex;
+      flex-direction:column;
+      gap:26px;
+    }
+
+    .impact-row{
+      display:grid;
+      grid-template-columns:360px 1fr;
+      gap:16px;
+      align-items:center;
+    }
+
+    .impact-label{
+      font-size:17px;
+      font-weight:600;
+    }
+
+    .compare{
+      display:grid;
+      grid-template-columns:90px 70px 1fr 90px 1fr;
+      gap:16px;
+      align-items:center;
+    }
+
+    .compare-num{
+      font-size:14px;
+      font-weight:600;
+      color:rgba(17,17,17,.72);
+    }
+
+    .compare-lift{
+      font-size:14px;
+      font-weight:600;
+      color:var(--green);
+    }
+
+    .bar{
+      height:20px;
+      border-radius:999px;
+      background:#d9dadd;
+      overflow:hidden;
+    }
+
+    .bar > span{
+      display:block;
+      height:100%;
+      border-radius:999px;
+    }
+
+    .stack{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .cards{
+      padding:20px;
+      display:grid;
+      gap:16px;
+    }
+
+    .rec-card{
+      background:var(--soft);
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:16px;
+    }
+
+    .rec-top{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .rec-title{
+      font-size:17px;
+      font-weight:600;
+    }
+
+    .rec-sub{
+      margin-top:4px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .lift-chip{
+      background:var(--blue);
+      color:var(--blue-ink);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:12px;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .rec-body{
+      margin-top:12px;
+      font-size:14px;
+      line-height:1.85;
+      color:rgba(17,17,17,.58);
+    }
+
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+    }
+
+    .mini-card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:20px;
+    }
+
+    .mini-label{
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .mini-title{
+      margin-top:8px;
+      font-size:22px;
+      font-weight:600;
+      letter-spacing:-.03em;
+    }
+
+    .mini-sub{
+      margin-top:4px;
+      font-size:14px;
+      color:var(--muted);
+    }
+
+    .mini-text{
+      margin-top:12px;
+      font-size:14px;
+      line-height:1.85;
+      color:rgba(17,17,17,.58);
+    }
+
+    .section-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:24px;
+    }
+
+    .pair-wrap{
+      padding:24px;
+      display:grid;
+      gap:20px;
+    }
+
+    .pair-card{
+      background:var(--soft);
+      border:1px solid var(--border);
+      border-radius:28px;
+      padding:20px;
+    }
+
+    .pair-head{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .pair-people{
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
+
+    .avatars{
+      display:flex;
+      align-items:center;
+    }
+
+    .avatar{
+      width:40px;height:40px;
+      border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      font-size:14px;font-weight:600;
+      border:3px solid #fff;
+      margin-left:-8px;
+    }
+    .avatar:first-child{margin-left:0}
+
+    .pair-name{
+      font-size:18px;
+      font-weight:600;
+      letter-spacing:-.02em;
+    }
+
+    .pair-type{
+      font-size:14px;
+      color:var(--muted);
+      margin-top:2px;
+    }
+
+    .gain-chip{
+      background:#fff;
+      color:var(--green);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:12px;
+      font-weight:600;
+      box-shadow:0 0 0 1px rgba(0,0,0,.06);
+      white-space:nowrap;
+    }
+
+    .pair-body{
+      margin-top:20px;
+      display:grid;
+      grid-template-columns:110px 1fr;
+      gap:20px;
+      align-items:center;
+    }
+
+    .small-gauge{
+      width:104px;height:104px;position:relative;border-radius:50%;
+    }
+    .small-gauge::before{
+      content:"";position:absolute;inset:8px;background:var(--bg);border-radius:50%;
+    }
+    .small-gauge::after{
+      content:"";position:absolute;inset:18px;background:#fff;border-radius:50%;z-index:1;
+    }
+    .small-center{
+      position:absolute;inset:0;z-index:2;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+    }
+    .small-value{
+      font-size:24px;font-weight:600;letter-spacing:-.04em;line-height:1;
+    }
+    .small-label{
+      margin-top:4px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.14em;color:var(--muted);
+    }
+    .small-potential{
+      margin-top:8px;
+      font-size:12px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:var(--muted-2);
+    }
+
+    .pair-move{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:22px;
+      padding:16px;
+    }
+
+    .pair-move-kicker{
+      font-size:12px;
+      font-weight:600;
+      text-transform:uppercase;
+      letter-spacing:.14em;
+      color:var(--muted-2);
+    }
+
+    .pair-move-title{
+      margin-top:8px;
+      font-size:17px;
+      font-weight:600;
+      line-height:1.65;
+    }
+
+    .pair-move-text{
+      margin-top:8px;
+      font-size:14px;
+      line-height:1.85;
+      color:rgba(17,17,17,.57);
+    }
+
+    @media (max-width: 1280px){
+      .metrics{grid-template-columns:repeat(2,1fr)}
+      .two-col,.section-grid{grid-template-columns:1fr}
+      .impact-row{grid-template-columns:1fr}
+    }
+
+    @media (max-width: 980px){
+      .layout{grid-template-columns:1fr;padding:20px}
+      .topbar-inner{padding:14px 20px}
+    }
 
-    .eyebrow {
-      font-size: 14px;
-      color: #6f6a63;
-      margin-bottom: 18px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.02fr 0.98fr;
-      gap: 28px;
-      align-items: start;
-      margin-bottom: 54px;
-    }
-
-    .hero-copy {
-      padding-top: 8px;
-    }
-
-    .hero h1 {
-      font-size: clamp(58px, 7vw, 92px);
-      line-height: 0.96;
-      letter-spacing: -0.05em;
-      margin: 0 0 24px;
-      font-weight: 800;
-    }
-
-    .hero p {
-      font-size: 20px;
-      line-height: 1.55;
-      color: #5d5953;
-      max-width: 760px;
-      margin: 0 0 28px;
-    }
-
-    .cta-row {
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-      align-items: center;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 26px;
-      background: #111;
-      color: #fff;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
-    }
-
-    .btn-secondary {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 22px;
-      background: transparent;
-      color: #5d5953;
-      border-radius: 999px;
-      font-size: 16px;
-      font-weight: 500;
-      text-decoration: none;
-      border: 1px solid #ddd5ca;
-    }
-
-    .hero-card {
-      background: #fff;
-      border: 1px solid #e7e0d6;
-      border-radius: 30px;
-      padding: 22px;
-      box-shadow: 0 24px 80px rgba(0,0,0,0.06);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .hero-card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .people {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .avatars {
-      display: flex;
-      align-items: center;
-    }
-
-    .avatar {
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 13px;
-      font-weight: 700;
-      border: 2px solid #fff;
-      margin-left: -8px;
-    }
-
-    .avatar:first-child { margin-left: 0; }
-    .avatar.a { background: linear-gradient(135deg, #7c6cff, #a79cff); }
-    .avatar.b { background: linear-gradient(135deg, #2e86de, #72b4ff); }
-
-    .people-meta h3 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 700;
-    }
-
-    .people-meta p {
-      margin: 2px 0 0;
-      font-size: 13px;
-      color: #777067;
-      line-height: 1.4;
-    }
-
-    .live {
-      font-size: 12px;
-      font-weight: 700;
-      color: #1d9d55;
-      background: #eaf8f0;
-      padding: 7px 10px;
-      border-radius: 999px;
-    }
-
-    .score-grid {
-      display: grid;
-      grid-template-columns: 150px 1fr;
-      gap: 18px;
-      align-items: stretch;
-    }
-
-    .score-box {
-      background: #faf8f4;
-      border: 1px solid #eee6db;
-      border-radius: 24px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px 14px;
-      min-height: 220px;
-    }
-
-    .score-circle {
-      width: 110px;
-      height: 110px;
-      border-radius: 50%;
-      background: conic-gradient(#111 0deg 220deg, #ebe5db 220deg 360deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 12px;
-    }
-
-    .score-circle-inner {
-      width: 82px;
-      height: 82px;
-      border-radius: 50%;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: inset 0 0 0 1px #eee6db;
-    }
-
-    .score-number {
-      font-size: 26px;
-      font-weight: 800;
-      line-height: 1;
-    }
-
-    .score-label {
-      font-size: 11px;
-      color: #7a746d;
-      margin-top: 3px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
-
-    .score-potential {
-      font-size: 13px;
-      font-weight: 700;
-      color: #1d9d55;
-    }
-
-    .recommend-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .mini-card {
-      background: #faf8f4;
-      border: 1px solid #eee6db;
-      border-radius: 18px;
-      padding: 14px;
-      min-height: 98px;
-    }
-
-    .mini-tag {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #8b857d;
-      margin-bottom: 6px;
-      font-weight: 700;
-    }
-
-    .mini-title {
-      font-size: 14px;
-      font-weight: 700;
-      line-height: 1.35;
-      margin-bottom: 8px;
-    }
-
-    .mini-lift {
-      display: inline-block;
-      font-size: 11px;
-      font-weight: 700;
-      color: #1d9d55;
-      background: #eaf8f0;
-      padding: 5px 8px;
-      border-radius: 999px;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 20px;
-      margin: 26px 0 18px;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-size: 40px;
-      line-height: 1.05;
-      letter-spacing: -0.04em;
-    }
-
-    .section-head p {
-      margin: 0;
-      max-width: 640px;
-      color: #6b655e;
-      font-size: 17px;
-      line-height: 1.55;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      margin-bottom: 28px;
-    }
-
-    .card {
-      background: #fff;
-      border: 1px solid #e7e0d6;
-      border-radius: 28px;
-      padding: 24px;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.045);
-    }
-
-    .card-top {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 18px;
-    }
-
-    .card-title-wrap {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .small-avatars {
-      display: flex;
-      align-items: center;
-    }
-
-    .small-avatar {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 12px;
-      font-weight: 700;
-      border: 2px solid #fff;
-      margin-left: -8px;
-    }
-
-    .small-avatar:first-child { margin-left: 0; }
-
-    .pink { background: linear-gradient(135deg, #fd79a8, #ffb0c8); }
-    .orange { background: linear-gradient(135deg, #f39c12, #f8c46a); }
-    .blue { background: linear-gradient(135deg, #2980b9, #6fb4df); }
-    .dark { background: linear-gradient(135deg, #4b5563, #1f2937); }
-
-    .card-name {
-      font-size: 15px;
-      font-weight: 700;
-      margin: 0;
-    }
-
-    .card-sub {
-      font-size: 13px;
-      color: #7c766f;
-      margin: 3px 0 0;
-    }
-
-    .badge {
-      font-size: 12px;
-      font-weight: 700;
-      color: #1d9d55;
-      background: #eaf8f0;
-      border-radius: 999px;
-      padding: 8px 10px;
-      white-space: nowrap;
-    }
-
-    .card-body {
-      display: grid;
-      grid-template-columns: 110px 1fr;
-      gap: 16px;
-      align-items: start;
-    }
-
-    .mini-score {
-      background: #faf8f4;
-      border: 1px solid #eee6db;
-      border-radius: 22px;
-      padding: 14px 10px;
-      text-align: center;
-    }
-
-    .mini-score-circle {
-      width: 84px;
-      height: 84px;
-      border-radius: 50%;
-      background: conic-gradient(#111 0deg 245deg, #ebe5db 245deg 360deg);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 8px;
-    }
-
-    .mini-score-inner {
-      width: 62px;
-      height: 62px;
-      border-radius: 50%;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 19px;
-      font-weight: 800;
-      box-shadow: inset 0 0 0 1px #eee6db;
-    }
-
-    .mini-score-potential {
-      font-size: 12px;
-      font-weight: 700;
-      color: #1d9d55;
-    }
-
-    .details {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-
-    .detail {
-      background: #faf8f4;
-      border: 1px solid #eee6db;
-      border-radius: 18px;
-      padding: 14px;
-    }
-
-    .detail-label {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #8a857e;
-      font-weight: 700;
-      margin-bottom: 6px;
-    }
-
-    .detail-text {
-      font-size: 14px;
-      line-height: 1.35;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .detail-meta {
-      font-size: 11px;
-      font-weight: 700;
-      color: #1d9d55;
-      background: #eaf8f0;
-      display: inline-block;
-      padding: 5px 8px;
-      border-radius: 999px;
-    }
-
-    .card-footer {
-      margin-top: 16px;
-      padding-top: 16px;
-      border-top: 1px solid #efe7dc;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .card-footer-text {
-      font-size: 13px;
-      color: #6f6962;
-    }
-
-    .card-footer-text strong {
-      color: #111;
-    }
-
-    .card-btn {
-      background: #111;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 999px;
-      padding: 10px 16px;
-      font-size: 13px;
-      font-weight: 700;
-      white-space: nowrap;
-    }
-
-    .site-links {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 18px;
-    }
-
-    .site-link-card {
-      background: #fff;
-      border: 1px solid #e7e0d6;
-      border-radius: 24px;
-      padding: 22px;
-      text-decoration: none;
-      color: #111;
-      box-shadow: 0 14px 40px rgba(0,0,0,0.04);
-    }
-
-    .site-link-card .mini-tag {
-      margin-bottom: 8px;
-    }
-
-    @media (max-width: 1100px) {
-      .hero,
-      .cards,
-      .site-links {
-        grid-template-columns: 1fr;
+    @media (max-width: 760px){
+      .page-title{font-size:40px}
+      .metrics{grid-template-columns:1fr}
+      .mini-grid{grid-template-columns:1fr}
+      .pair-body{grid-template-columns:1fr}
+      .compare{
+        grid-template-columns:1fr;
+        gap:10px;
       }
-    }
-
-    @media (max-width: 720px) {
-      .page { padding: 20px 18px 50px; }
-      .nav { flex-direction: column; align-items: flex-start; gap: 14px; }
-      .hero h1 { font-size: 48px; }
-      .hero p { font-size: 18px; }
-      .score-grid,
-      .card-body,
-      .recommend-grid,
-      .details {
-        grid-template-columns: 1fr;
-      }
-      .section-head {
-        flex-direction: column;
-        align-items: start;
-      }
+      .impact-label{font-size:16px}
+      .panel-head{padding:16px 18px}
+      .impact-wrap,.pair-wrap,.cards{padding:18px}
+      .brand-sub{display:none}
     }
   </style>
 </head>
 <body>
-  <div class="page">
-
-    <div class="nav">
-      <div class="brand">Between</div>
-      <div class="nav-links">
-        <a href="/how-it-works.html">How it works</a>
-        <a href="/dashboard.html">Personal dashboard</a>
-        <a href="/connection-result.html">Connection result</a>
-        <a class="nav-cta" href="https://form.typeform.com/to/gTTZC8Mr" target="_blank" rel="noopener noreferrer">Create a connection gift</a>
-      </div>
-    </div>
-
-    <div class="eyebrow">The modern-day version of sending flowers</div>
-
-    <section class="hero">
-      <div class="hero-copy">
-        <h1>Flowers are nice.<br>This lasts longer.</h1>
-        <p>
-          A connection gift that uses real data to reveal what brings two people closer —
-          with shared recommendations, projected impact, and a result worth posting.
-        </p>
-        <div class="cta-row">
-          <a href="https://form.typeform.com/to/gTTZC8Mr" class="btn-primary" target="_blank" rel="noopener noreferrer">Create a connection gift</a>
-          <a href="/how-it-works.html" class="btn-secondary">How it works</a>
+  <div class="app">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <div class="brand-title">Between</div>
+          <div class="brand-sub">Personal dashboard</div>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-outline-dark">Privacy</button>
+          <button class="btn btn-outline-dark">Export</button>
+          <button class="btn btn-primary">Send weekly connection</button>
         </div>
       </div>
+    </header>
 
-      <div class="hero-card">
-        <div class="hero-card-top">
-          <div class="people">
-            <div class="avatars">
-              <div class="avatar a">A</div>
-              <div class="avatar b">K</div>
-            </div>
-            <div class="people-meta">
-              <h3>Amr + Karim</h3>
-              <p>Best friends · Connection gift</p>
-            </div>
+    <main class="layout">
+      <aside>
+        <div class="panel side-panel">
+          <div class="head-accent">
+            <div class="panel-title">Your dashboard</div>
+            <div class="side-score">72% → 86%</div>
+            <div class="panel-kicker">Your next best week, if you follow the plan</div>
           </div>
-          <div class="live">Live</div>
-        </div>
 
-        <div class="score-grid">
-          <div class="score-box">
-            <div class="score-circle">
-              <div class="score-circle-inner">
-                <div class="score-number">61%</div>
+          <div class="side-list">
+            <div class="side-item">
+              <div class="side-icon">›</div>
+              <div>
+                <div class="side-item-title">Your profile</div>
+                <div class="side-item-sub">Amr · Abu Dhabi</div>
+                <div class="side-item-value">Momentum-driven, socially activated</div>
               </div>
             </div>
-            <div class="score-label">Current match</div>
-            <div class="score-potential">→ 82% potential</div>
-          </div>
 
-          <div class="recommend-grid">
-            <div class="mini-card">
-              <div class="mini-tag">Go</div>
-              <div class="mini-title">Scorpions · Etihad Arena · 3 May 2026</div>
-              <div class="mini-lift">+12% bond</div>
+            <div class="side-item">
+              <div class="side-icon">›</div>
+              <div>
+                <div class="side-item-title">This week’s connection</div>
+                <div class="side-item-sub">1 invite available</div>
+                <div class="side-item-value">Karim is the best fit this week</div>
+              </div>
             </div>
 
-            <div class="mini-card">
-              <div class="mini-tag">Watch</div>
-              <div class="mini-title">Heat</div>
-              <div class="mini-lift">+9% mood</div>
+            <div class="side-item">
+              <div class="side-icon">›</div>
+              <div>
+                <div class="side-item-title">Mood snapshot</div>
+                <div class="side-item-sub">High positivity, strong social readiness</div>
+                <div class="side-item-value">81% positivity</div>
+              </div>
             </div>
 
-            <div class="mini-card">
-              <div class="mini-tag">After</div>
-              <div class="mini-title">Late dinner at Yas Bay</div>
-              <div class="mini-lift">+6% energy</div>
-            </div>
-
-            <div class="mini-card">
-              <div class="mini-tag">This month</div>
-              <div class="mini-title">Book one proper night out</div>
-              <div class="mini-lift">+15% confidence</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <div class="section-head" id="examples">
-      <h2>Example reveals</h2>
-      <p>
-        Each connection reveal compares patterns across two people and turns them into
-        specific recommendations, projected lifts, and a visual result that feels real enough to share.
-      </p>
-    </div>
-
-    <section class="cards">
-      <div class="card">
-        <div class="card-top">
-          <div class="card-title-wrap">
-            <div class="small-avatars">
-              <div class="small-avatar pink">L</div>
-              <div class="small-avatar orange">M</div>
-            </div>
-            <div>
-              <p class="card-name">Layla + Maya</p>
-              <p class="card-sub">Sisters · Just because</p>
-            </div>
-          </div>
-          <div class="badge">+17% projected</div>
-        </div>
-
-        <div class="card-body">
-          <div class="mini-score">
-            <div class="mini-score-circle">
-              <div class="mini-score-inner">74%</div>
-            </div>
-            <div class="mini-score-potential">→ 91% potential</div>
-          </div>
-
-          <div class="details">
-            <div class="detail">
-              <div class="detail-label">Go</div>
-              <div class="detail-text">Christina Aguilera · Etihad Arena · 24 Apr 2026</div>
-              <div class="detail-meta">+11% mood</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">After</div>
-              <div class="detail-text">Yas Bay drinks after the show</div>
-              <div class="detail-meta">+13% bond</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">Watch</div>
-              <div class="detail-text">Bridesmaids</div>
-              <div class="detail-meta">+8% energy</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">Plan</div>
-              <div class="detail-text">One sisters night in April</div>
-              <div class="detail-meta">+11% rhythm</div>
+            <div class="side-item">
+              <div class="side-icon">›</div>
+              <div>
+                <div class="side-item-title">This month</div>
+                <div class="side-item-sub">2 strong opportunities detected</div>
+                <div class="side-item-value">+18% projected lift</div>
+              </div>
             </div>
           </div>
         </div>
 
-        <div class="card-footer">
-          <div class="card-footer-text">Sent because <strong>flowers disappear by Tuesday</strong></div>
-          <a href="/connection-result.html" class="card-btn">View reveal page</a>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-top">
-          <div class="card-title-wrap">
-            <div class="small-avatars">
-              <div class="small-avatar dark">D</div>
-              <div class="small-avatar blue">S</div>
-            </div>
-            <div>
-              <p class="card-name">Dad + Sam</p>
-              <p class="card-sub">Father & son · Father’s Day</p>
-            </div>
-          </div>
-          <div class="badge">+25% projected</div>
-        </div>
-
-        <div class="card-body">
-          <div class="mini-score">
-            <div class="mini-score-circle" style="background: conic-gradient(#111 0deg 190deg, #ebe5db 190deg 360deg);">
-              <div class="mini-score-inner">53%</div>
-            </div>
-            <div class="mini-score-potential">→ 78% potential</div>
-          </div>
-
-          <div class="details">
-            <div class="detail">
-              <div class="detail-label">Go</div>
-              <div class="detail-text">Cirque du Soleil: Corteo · Etihad Arena · 12 Jun 2026</div>
-              <div class="detail-meta">+22% bond</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">Do</div>
-              <div class="detail-text">Yas Marina karting that weekend</div>
-              <div class="detail-meta">+18% ease</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">Watch</div>
-              <div class="detail-text">Ford v Ferrari</div>
-              <div class="detail-meta">+11% mood</div>
-            </div>
-
-            <div class="detail">
-              <div class="detail-label">After</div>
-              <div class="detail-text">Drive through Yas Bay after the show</div>
-              <div class="detail-meta">+16% energy</div>
+        <div class="panel side-panel" style="margin-top:20px">
+          <div class="head-accent" style="border-top-color: var(--purple)">
+            <div class="panel-title" style="font-size:30px">How this is estimated</div>
+            <div class="trust-copy">
+              Built from connected signals, recent patterns, and the things you choose to share.
+              Shared views are only created when both people opt in.
             </div>
           </div>
         </div>
+      </aside>
 
-        <div class="card-footer">
-          <div class="card-footer-text">Sent for Father’s Day — <strong>better than pretending he wanted another wallet</strong></div>
-          <a href="/connection-result.html" class="card-btn">View reveal page</a>
+      <section class="main">
+        <div>
+          <div class="page-title">Your dashboard</div>
+          <div class="page-sub">Private by default. Weekly recommendations, clearer signals, and one connection invite each week.</div>
         </div>
-      </div>
-    </section>
 
-    <div class="section-head">
-      <h2>Explore the product</h2>
-      <p>
-        These pages are still early, but together they already show the product logic:
-        the gift, the shared reveal, the personal dashboard, and the explanation layer.
-      </p>
-    </div>
+        <div class="tabs">
+          <div class="tab active">Overview</div>
+          <div class="tab">Recommendations</div>
+          <div class="tab">Connections</div>
+          <div class="tab">Calendar</div>
+          <div class="tab">Progress</div>
+        </div>
 
-    <section class="site-links">
-      <a class="site-link-card" href="/how-it-works.html">
-        <div class="mini-tag">Page 1</div>
-        <div class="mini-title">How it works</div>
-        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The clean explanation page for the product logic.</div>
-      </a>
+        <div class="metrics">
+          <div class="metric-card">
+            <div class="metric-label">Happiness</div>
+            <div class="gauge" style="background:conic-gradient(var(--yellow) 0deg 259deg, #e8e8ec 259deg 360deg)">
+              <div class="gauge-center">
+                <div class="gauge-value">72<small>%</small></div>
+              </div>
+            </div>
+            <div class="spark">
+              <div class="spark-base"></div>
+              <div class="spark-fill" style="background:var(--yellow)"></div>
+            </div>
+          </div>
 
-      <a class="site-link-card" href="/dashboard.html">
-        <div class="mini-tag">Page 2</div>
-        <div class="mini-title">Personal dashboard</div>
-        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The solo page that helps a person understand themselves.</div>
-      </a>
+          <div class="metric-card">
+            <div class="metric-label">Positivity</div>
+            <div class="gauge" style="background:conic-gradient(var(--purple) 0deg 292deg, #e8e8ec 292deg 360deg)">
+              <div class="gauge-center">
+                <div class="gauge-value">81<small>%</small></div>
+              </div>
+            </div>
+            <div class="spark">
+              <div class="spark-base"></div>
+              <div class="spark-fill" style="background:var(--purple)"></div>
+            </div>
+          </div>
 
-      <a class="site-link-card" href="/connection-result.html">
-        <div class="mini-tag">Page 3</div>
-        <div class="mini-title">Connection result</div>
-        <div style="color:#6b655e;font-size:15px;line-height:1.6;">The shared reveal page two people can open together.</div>
-      </a>
-    </section>
+          <div class="metric-card">
+            <div class="metric-label">Social readiness</div>
+            <div class="gauge" style="background:conic-gradient(var(--yellow) 0deg 241deg, #e8e8ec 241deg 360deg)">
+              <div class="gauge-center">
+                <div class="gauge-value">67<small>%</small></div>
+              </div>
+            </div>
+            <div class="spark">
+              <div class="spark-base"></div>
+              <div class="spark-fill" style="background:var(--yellow)"></div>
+            </div>
+          </div>
 
+          <div class="metric-card">
+            <div class="metric-label">Weekly momentum</div>
+            <div class="gauge" style="background:conic-gradient(var(--purple) 0deg 50deg, #e8e8ec 50deg 360deg)">
+              <div class="gauge-center">
+                <div class="gauge-value">+14<small>%</small></div>
+              </div>
+            </div>
+            <div class="spark">
+              <div class="spark-base"></div>
+              <div class="spark-fill" style="background:var(--purple)"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-head-title">Recommended impact</div>
+                <div class="panel-head-sub">The real-life things most likely to improve your week</div>
+              </div>
+              <button class="btn btn-soft">Sort by strongest lift</button>
+            </div>
+
+            <div class="impact-wrap">
+              <div class="impact-row">
+                <div class="impact-label">Sandbox Festival · May 7–9</div>
+                <div class="compare">
+                  <div class="compare-num">82%</div>
+                  <div class="compare-lift">+18%</div>
+                  <div class="bar"><span style="width:82%; background:var(--yellow)"></span></div>
+                  <div class="compare-num">61%</div>
+                  <div class="bar"><span style="width:61%; background:var(--purple)"></span></div>
+                </div>
+              </div>
+
+              <div class="impact-row">
+                <div class="impact-label">Picasso at Louvre Abu Dhabi</div>
+                <div class="compare">
+                  <div class="compare-num">78%</div>
+                  <div class="compare-lift">+19%</div>
+                  <div class="bar"><span style="width:78%; background:var(--yellow)"></span></div>
+                  <div class="compare-num">54%</div>
+                  <div class="bar"><span style="width:54%; background:var(--purple)"></span></div>
+                </div>
+              </div>
+
+              <div class="impact-row">
+                <div class="impact-label">Dinner at 3Fils</div>
+                <div class="compare">
+                  <div class="compare-num">64%</div>
+                  <div class="compare-lift">+11%</div>
+                  <div class="bar"><span style="width:64%; background:var(--yellow)"></span></div>
+                  <div class="compare-num">49%</div>
+                  <div class="bar"><span style="width:49%; background:var(--purple)"></span></div>
+                </div>
+              </div>
+
+              <div class="impact-row">
+                <div class="impact-label">Friday city walk ritual</div>
+                <div class="compare">
+                  <div class="compare-num">71%</div>
+                  <div class="compare-lift">+15%</div>
+                  <div class="bar"><span style="width:71%; background:var(--yellow)"></span></div>
+                  <div class="compare-num">44%</div>
+                  <div class="bar"><span style="width:44%; background:var(--purple)"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="stack">
+            <div class="panel">
+              <div class="panel-head">
+                <div>
+                  <div class="panel-head-title">This week’s recommendations</div>
+                  <div class="panel-head-sub">Things you can actually book, follow, or plan now</div>
+                </div>
+                <button class="btn btn-soft">See all</button>
+              </div>
+
+              <div class="cards">
+                <div class="rec-card">
+                  <div class="rec-top">
+                    <div>
+                      <div class="rec-title">Sandbox Festival</div>
+                      <div class="rec-sub">May 7–9</div>
+                    </div>
+                    <div class="lift-chip">+18% personal uplift</div>
+                  </div>
+                  <div class="rec-body">
+                    Shared novelty, low-pressure energy, strong memory potential.
+                  </div>
+                  <button class="btn btn-soft" style="margin-top:14px">Add to calendar</button>
+                </div>
+
+                <div class="rec-card">
+                  <div class="rec-top">
+                    <div>
+                      <div class="rec-title">Abu Dhabi Grand Prix</div>
+                      <div class="rec-sub">Qualifying + Race weekend</div>
+                    </div>
+                    <div class="lift-chip">+12% weekly momentum</div>
+                  </div>
+                  <div class="rec-body">
+                    A natural shared anchor with anticipation before and conversation after.
+                  </div>
+                  <button class="btn btn-soft" style="margin-top:14px">Add race weekend</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="mini-grid">
+              <div class="mini-card">
+                <div class="mini-label">Movie</div>
+                <div class="mini-title">Past Lives</div>
+                <div class="mini-sub">This week’s film</div>
+                <div class="mini-text">
+                  Quiet, emotionally precise, and ideal for a longer conversation after watching.
+                </div>
+                <button class="btn btn-soft" style="margin-top:14px">Add movie night</button>
+              </div>
+
+              <div class="mini-card">
+                <div class="mini-label">Place</div>
+                <div class="mini-title">3Fils at The Edition</div>
+                <div class="mini-sub">Dinner fit</div>
+                <div class="mini-text">
+                  Small table, longer dinner, lighter atmosphere — stronger for this pairing than a louder venue.
+                </div>
+                <button class="btn btn-soft" style="margin-top:14px">Add dinner</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-grid">
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-head-title">This week’s connection</div>
+                <div class="panel-head-sub">Send one shared dashboard invite to someone who matters</div>
+              </div>
+              <button class="btn btn-black">Send weekly connection</button>
+            </div>
+
+            <div style="padding:24px">
+              <div class="pair-card" style="background:var(--soft)">
+                <div class="rec-top">
+                  <div>
+                    <div class="rec-title">Best match this week: Karim</div>
+                    <div class="rec-sub">Best friend · 63% current overlap · high event compatibility</div>
+                  </div>
+                  <div class="lift-chip">1 invite available</div>
+                </div>
+                <div class="rec-body">
+                  If Karim joins, you both unlock one shared dashboard with the best event, film, place, and ritual for this week.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-head-title">Shared dashboard examples</div>
+                <div class="panel-head-sub">How the same system works when two people connect</div>
+              </div>
+              <button class="btn btn-soft">See all examples</button>
+            </div>
+
+            <div class="pair-wrap">
+              <div class="pair-card">
+                <div class="pair-head">
+                  <div class="pair-people">
+                    <div class="avatars">
+                      <div class="avatar" style="background:var(--yellow); color:#111">L</div>
+                      <div class="avatar" style="background:#111; color:#fff">S</div>
+                    </div>
+                    <div>
+                      <div class="pair-name">Leila + Sara</div>
+                      <div class="pair-type">Sisters</div>
+                    </div>
+                  </div>
+                  <div class="gain-chip">+16%</div>
+                </div>
+
+                <div class="pair-body">
+                  <div>
+                    <div class="small-gauge" style="background:conic-gradient(var(--yellow) 0deg 317deg, #e8e8ec 317deg 360deg)">
+                      <div class="small-center">
+                        <div class="small-value">72%</div>
+                        <div class="small-label">Now</div>
+                      </div>
+                    </div>
+                    <div class="small-potential">Potential 88%</div>
+                  </div>
+
+                  <div class="pair-move">
+                    <div class="pair-move-kicker">Best move this month</div>
+                    <div class="pair-move-title">Go to Picasso at Louvre Abu Dhabi, then have dinner at 3Fils.</div>
+                    <div class="pair-move-text">
+                      You respond best to slow, beautiful plans with room for conversation afterwards.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="pair-card">
+                <div class="pair-head">
+                  <div class="pair-people">
+                    <div class="avatars">
+                      <div class="avatar" style="background:#111; color:#fff">O</div>
+                      <div class="avatar" style="background:var(--purple); color:#fff">D</div>
+                    </div>
+                    <div>
+                      <div class="pair-name">Omar + Dad</div>
+                      <div class="pair-type">Father &amp; son</div>
+                    </div>
+                  </div>
+                  <div class="gain-chip">+22%</div>
+                </div>
+
+                <div class="pair-body">
+                  <div>
+                    <div class="small-gauge" style="background:conic-gradient(var(--yellow) 0deg 274deg, #e8e8ec 274deg 360deg)">
+                      <div class="small-center">
+                        <div class="small-value">54%</div>
+                        <div class="small-label">Now</div>
+                      </div>
+                    </div>
+                    <div class="small-potential">Potential 76%</div>
+                  </div>
+
+                  <div class="pair-move">
+                    <div class="pair-move-kicker">Best move this month</div>
+                    <div class="pair-move-title">Follow the Abu Dhabi Grand Prix weekend together and book one dinner after qualifying.</div>
+                    <div class="pair-move-text">
+                      Shared anticipation plus a real event gives you an easier, more natural opening.
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
   </div>
 </body>
 </html>
